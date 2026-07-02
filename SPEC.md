@@ -11,7 +11,7 @@ A personal recruiting system for tracking job search activity end-to-end: a know
 
 - **Database:** Supabase — reuses Ahmed's existing Supabase project (currently home to the recipes app), not a new project. All Recruiting OS tables are prefixed `recruiting_` to avoid naming collisions (e.g. `recruiting_profile_projects` can never clash with an unrelated `projects` table). RLS policies scoped per-table so recipe-app data and recruiting data stay isolated even though they share a project/auth instance.
 - **Webapp:** Next.js, edit-enabled, deployed on Vercel
-- **Auth:** Supabase Auth, single user — the project's `auth.users` is shared with the recipes app, so the webapp just checks for Ahmed's existing user; no separate auth system
+- **Auth:** none (login removed 2026-07-01). All DB access is server-side via the project secret key; the app must not be deployed to a publicly reachable URL without access protection
 - **Skills:** Live in `.claude/skills/`, invoked manually by name in a Claude Code session. Supabase MCP for DB, Gmail MCP for email. No cron, no GitHub Actions, no headless runs.
 - **Resume format:** LaTeX. `resume-tailor` only edits bullet points and adds/removes project blocks — never structure, formatting, margins, or document class.
 
@@ -39,7 +39,7 @@ Seven `recruiting_`-prefixed tables — see `supabase/migrations/` for the autho
 
 ## 4. Webapp
 
-Edit-enabled — add/update roles, stages, contacts, interactions in the UI, writing to the same tables the skills use. Views: pipeline board (roles by stage), contacts list with follow-up-due flags, role detail (JD, fit rationale, applications/resume versions), profile bank viewer (read-mostly). Auth: Supabase Auth, single user. Hosting: Vercel.
+Edit-enabled — add/update roles, stages, contacts, interactions in the UI, writing to the same tables the skills use. Views: pipeline board (roles by stage), contacts list with follow-up-due flags, role detail (JD, fit rationale, applications/resume versions), profile bank viewer (read-mostly). Auth: none — server-side secret key; keep deployments access-protected. Hosting: Vercel.
 
 ## 5. Non-goals / guardrails
 

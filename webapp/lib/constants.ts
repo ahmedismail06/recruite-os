@@ -1,8 +1,3 @@
-// Single-user app: everything is pinned to Ahmed's auth user, which lives in
-// a Supabase project shared with the recipes app. RLS enforces this on the DB
-// side (public.recruiting_owner()); this constant enforces it in the UI.
-export const OWNER_ID = "a208e139-3cf1-40ed-aab5-417dc479c585";
-
 export const ROLE_STATUSES = [
   "interested",
   "applied",

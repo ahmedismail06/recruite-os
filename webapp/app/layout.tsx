@@ -51,11 +51,6 @@ export default function RootLayout({
                 </Link>
               ))}
             </nav>
-            <form action="/auth/signout" method="post">
-              <button className="cursor-pointer text-sm text-slate-400 hover:text-slate-700">
-                Sign out
-              </button>
-            </form>
           </div>
         </header>
         <div className="flex-1">{children}</div>

@@ -28,4 +28,4 @@ Base template: `resumes/base.tex` (provided by Ahmed — LaTeX). Tailored versio
 
 ## Webapp (`webapp/`)
 
-Next.js (App Router) + `@supabase/ssr`, deployed on Vercel. Auth via the shared Supabase Auth; the app additionally checks the signed-in user is Ahmed (RLS enforces it regardless). Env vars in `webapp/.env.local` (see `webapp/.env.example`).
+Next.js (App Router). **No login** (removed by Ahmed's request 2026-07-01): all DB access is server-side using the project secret key (`SUPABASE_SECRET_KEY` in `webapp/.env.local`, see `.env.example`), which bypasses RLS. Never expose that key to the browser, and never deploy the app publicly without access protection (e.g. Vercel Deployment Protection) — anyone who can reach it can edit the data.
