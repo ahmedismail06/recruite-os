@@ -20,7 +20,7 @@ Supabase project `dlyombtgtgsavtiqohve` (**mamas-recipes**) — shared with the 
 
 ## Skills (`.claude/skills/`)
 
-`/profile-bank`, `/recruiting-crm`, `/role-recommend`, `/resume-tailor`, `/recruiting-digest` — each SKILL.md is authoritative for its flow and guardrails.
+`/profile-bank`, `/recruiting-crm`, `/role-recommend`, `/role-scout`, `/resume-tailor`, `/recruiting-digest` — each SKILL.md is authoritative for its flow and guardrails.
 
 ## Resume
 
