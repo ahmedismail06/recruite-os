@@ -22,6 +22,8 @@ Supabase project `dlyombtgtgsavtiqohve` (**mamas-recipes**) — shared with the 
 
 `/profile-bank`, `/recruiting-crm`, `/role-recommend`, `/role-scout`, `/resume-tailor`, `/recruiting-digest` — each SKILL.md is authoritative for its flow and guardrails.
 
+`mcp/skills-server/` exposes these same skills over MCP (registered at user scope via `claude mcp add`) as `/mcp__recruiting-skills__*` prompts and `list_skills`/`get_skill` tools, plus `db_select`/`db_insert`/`db_update` tools scoped to the `recruiting_` tables (no delete tool — CRM rows are never deleted). See its README. The server performs no AI or email work itself.
+
 ## Resume
 
 Base template: `resumes/base.tex` (provided by Ahmed — LaTeX). Tailored versions go to `resumes/tailored/`, versioned, never overwritten. Structure/formatting is never edited — bullet content and project-block inclusion only.
