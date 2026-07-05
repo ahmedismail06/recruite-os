@@ -11,6 +11,13 @@ function str(formData: FormData, key: string): string | null {
   return s.length > 0 ? s : null;
 }
 
+// Accepts bare domains ("greenhouse.io/…") and normalizes to https://.
+function urlStr(formData: FormData, key: string): string | null {
+  const s = str(formData, key);
+  if (!s) return null;
+  return /^https?:\/\//i.test(s) ? s : `https://${s}`;
+}
+
 // ── Roles ───────────────────────────────────────────────────────
 
 export async function addRole(formData: FormData) {
@@ -21,6 +28,7 @@ export async function addRole(formData: FormData) {
       company: str(formData, "company"),
       title: str(formData, "title"),
       jd_text: str(formData, "jd_text"),
+      posting_url: urlStr(formData, "posting_url"),
       source: "manual",
     })
     .select("id")
@@ -51,6 +59,36 @@ export async function updateRoleStatus(formData: FormData) {
     .eq("id", roleId);
   if (error) throw new Error(error.message);
   revalidatePath("/");
+  revalidatePath(`/roles/${roleId}`);
+}
+
+export async function updatePostingUrl(formData: FormData) {
+  const roleId = str(formData, "role_id");
+  if (!roleId) return;
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("recruiting_roles")
+    .update({ posting_url: urlStr(formData, "posting_url") })
+    .eq("id", roleId);
+  if (error) throw new Error(error.message);
+  revalidatePath("/");
+  revalidatePath(`/roles/${roleId}`);
+}
+
+// Manual override for when Ahmed spots a watchlisted posting go live before
+// the next role-scout run catches it — role-scout is the one that normally
+// flips this once it finds a real posting URL/JD.
+export async function markRolePosted(formData: FormData) {
+  const roleId = str(formData, "role_id");
+  if (!roleId) return;
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("recruiting_roles")
+    .update({ not_yet_posted: false, last_checked_at: new Date().toISOString() })
+    .eq("id", roleId);
+  if (error) throw new Error(error.message);
+  revalidatePath("/");
+  revalidatePath("/roles");
   revalidatePath(`/roles/${roleId}`);
 }
 
@@ -119,9 +157,23 @@ export async function addContact(formData: FormData) {
     name: str(formData, "name"),
     company: str(formData, "company"),
     email: str(formData, "email"),
+    title: str(formData, "title"),
+    linkedin_url: urlStr(formData, "linkedin_url"),
     notes: str(formData, "notes"),
     role_id: str(formData, "role_id"),
   });
+  if (error) throw new Error(error.message);
+  revalidatePath("/contacts");
+}
+
+export async function updateDraftMessage(formData: FormData) {
+  const contactId = str(formData, "contact_id");
+  if (!contactId) return;
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("recruiting_contacts")
+    .update({ draft_message: str(formData, "draft_message") })
+    .eq("id", contactId);
   if (error) throw new Error(error.message);
   revalidatePath("/contacts");
 }

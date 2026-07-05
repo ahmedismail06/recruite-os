@@ -5,11 +5,14 @@ export type Role = {
   company: string;
   title: string;
   jd_text: string | null;
+  posting_url: string | null;
   source: "manual" | "ai-suggested";
   status: RoleStatus;
   fit_rationale: string | null;
   date_added: string;
   date_applied: string | null;
+  not_yet_posted: boolean;
+  last_checked_at: string | null;
 };
 
 export type Application = {
@@ -31,6 +34,9 @@ export type Contact = {
   company: string | null;
   role_id: string | null;
   email: string | null;
+  title: string | null;
+  linkedin_url: string | null;
+  draft_message: string | null;
   last_touch_date: string | null;
   last_touch_direction: "sent" | "received" | null;
   follow_up_due_days: number;
@@ -106,4 +112,44 @@ export function applicationFollowUpDue(app: Application, role: Role): boolean {
   if (last.length === 0) return false;
   const days = Math.floor((Date.now() - Math.max(...last)) / 86_400_000);
   return days > app.follow_up_due_days;
+}
+
+export function isClosedStatus(status: RoleStatus): boolean {
+  return status === "rejected" || status === "ghosted";
+}
+
+// Days since the role last moved — used as the "freshness" cue on cards.
+// Interested roles age from when they were saved; anything past that ages
+// from the most recent of date_applied / an application's updated_at.
+export function daysInStage(role: Role, apps: Application[]): number {
+  if (role.status === "interested") {
+    return daysSince(role.date_added) ?? 0;
+  }
+  const timestamps = [
+    role.date_applied,
+    ...apps.filter((a) => a.role_id === role.id).map((a) => a.updated_at),
+  ]
+    .filter(Boolean)
+    .map((d) => new Date(d as string).getTime());
+  if (timestamps.length === 0) return daysSince(role.date_added) ?? 0;
+  return Math.floor((Date.now() - Math.max(...timestamps)) / 86_400_000);
+}
+
+export type Freshness = "fresh" | "aging" | "stale";
+
+export function freshness(days: number): Freshness {
+  if (days >= 14) return "stale";
+  if (days >= 5) return "aging";
+  return "fresh";
+}
+
+export function latestApplication(
+  apps: Application[],
+  roleId: string
+): Application | null {
+  const forRole = apps.filter((a) => a.role_id === roleId);
+  if (forRole.length === 0) return null;
+  return forRole.reduce((latest, a) =>
+    new Date(a.updated_at).getTime() > new Date(latest.updated_at).getTime() ? a : latest
+  );
 }

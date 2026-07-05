@@ -10,14 +10,35 @@ export const ROLE_STATUSES = [
 
 export type RoleStatus = (typeof ROLE_STATUSES)[number];
 
-export const STATUS_COLORS: Record<RoleStatus, string> = {
-  interested: "bg-slate-100 text-slate-700",
-  applied: "bg-blue-100 text-blue-800",
-  screening: "bg-amber-100 text-amber-800",
-  interviewing: "bg-violet-100 text-violet-800",
-  offer: "bg-emerald-100 text-emerald-800",
-  rejected: "bg-rose-100 text-rose-700",
-  ghosted: "bg-zinc-200 text-zinc-600",
+export const STATUS_LABELS: Record<RoleStatus, string> = {
+  interested: "Interested",
+  applied: "Applied",
+  screening: "Screening",
+  interviewing: "Interviewing",
+  offer: "Offer",
+  rejected: "Rejected",
+  ghosted: "Ghosted",
 };
+
+// Which kanban column a status renders in — rejected/ghosted share the
+// de-emphasized "closed" column per the dashboard design.
+export const STATUS_COLUMN: Record<RoleStatus, string> = {
+  interested: "interested",
+  applied: "applied",
+  screening: "screening",
+  interviewing: "interviewing",
+  offer: "offer",
+  rejected: "closed",
+  ghosted: "closed",
+};
+
+export const BOARD_COLUMNS = [
+  { key: "interested", label: "Interested" },
+  { key: "applied", label: "Applied" },
+  { key: "screening", label: "Screening" },
+  { key: "interviewing", label: "Interviewing" },
+  { key: "offer", label: "Offer" },
+  { key: "closed", label: "Closed" },
+] as const;
 
 export const INTERACTION_TYPES = ["email", "call", "coffee chat", "other"] as const;
