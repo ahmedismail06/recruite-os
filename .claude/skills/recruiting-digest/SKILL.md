@@ -10,7 +10,7 @@ On-demand only — runs when Ahmed asks, never on a schedule. Uses Gmail MCP for
 ## Procedure
 
 ### 1. Load CRM state
-Fetch all `recruiting_contacts` (name, email, company, last_touch, follow_up_due_days), active `recruiting_roles`/`recruiting_applications` (status not in rejected/ghosted for outreach purposes), and recent `recruiting_interactions` (with `gmail_thread_id`).
+Fetch all `recruiting_contacts` (name, email, company, last_touch, follow_up_due_days), active `recruiting_roles`/`recruiting_applications` (status not in rejected/ghosted/not_interested for outreach purposes), and recent `recruiting_interactions` (with `gmail_thread_id`).
 
 ### 2. Scan Gmail
 Use Gmail search (`search_threads`) scoped to roughly the last 30 days:

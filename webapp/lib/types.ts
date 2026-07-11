@@ -115,7 +115,7 @@ export function applicationFollowUpDue(app: Application, role: Role): boolean {
 }
 
 export function isClosedStatus(status: RoleStatus): boolean {
-  return status === "rejected" || status === "ghosted";
+  return status === "rejected" || status === "ghosted" || status === "not_interested";
 }
 
 // Days since the role last moved — used as the "freshness" cue on cards.

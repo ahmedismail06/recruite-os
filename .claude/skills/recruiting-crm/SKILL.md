@@ -18,9 +18,9 @@ Input: pasted JD text or a link (fetch it if a link). Insert into `recruiting_ro
 When Ahmed says he applied: set the role's `status = 'applied'` and `date_applied = now()`, and insert a `recruiting_applications` row (`stage = 'applied'`, `follow_up_due_days = 14`). One application row per role unless he re-applies to a distinct posting.
 
 ### Update stage
-Update both `recruiting_applications.stage` and the coarse `recruiting_roles.status` (interested / applied / screening / interviewing / offer / rejected / ghosted). Record `next_action` / `next_action_due` if Ahmed states one (e.g. "phone screen Friday").
+Update both `recruiting_applications.stage` and the coarse `recruiting_roles.status` (interested / applied / screening / interviewing / offer / rejected / ghosted / not_interested). Record `next_action` / `next_action_due` if Ahmed states one (e.g. "phone screen Friday").
 
-**Rejection/ghosting:** set status only. Never delete the row — rejected/ghosted roles are kept permanently for pattern analysis.
+**Rejection/ghosting/not interested:** set status only. Never delete the row — rejected/ghosted/not_interested roles are kept permanently for pattern analysis. Use `not_interested` when Ahmed decides to pass on a role himself (as opposed to `rejected`, where the company said no, or `ghosted`, where they went silent) — e.g. "I'm not interested in that one" or "pass on this role."
 
 ### Log a contact
 Insert into `recruiting_contacts` (`name`, `company`, `email`, optional `role_id`, `notes`), `follow_up_due_days = 7` (end-of-week convention for networking contacts). Dedupe on email, else name+company.
