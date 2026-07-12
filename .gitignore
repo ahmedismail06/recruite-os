@@ -11,3 +11,8 @@ node_modules/
 *.fdb_latexmk
 *.synctex.gz
 resumes/**/*.log
+
+# Personal application content — never tracked in git
+/knowledge-base/
+/resumes/
+/cover-letters/
