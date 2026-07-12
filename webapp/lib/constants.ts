@@ -7,6 +7,7 @@ export const ROLE_STATUSES = [
   "rejected",
   "ghosted",
   "not_interested",
+  "posting_closed",
 ] as const;
 
 export type RoleStatus = (typeof ROLE_STATUSES)[number];
@@ -20,10 +21,11 @@ export const STATUS_LABELS: Record<RoleStatus, string> = {
   rejected: "Rejected",
   ghosted: "Ghosted",
   not_interested: "Not Interested",
+  posting_closed: "Posting Closed",
 };
 
-// Which kanban column a status renders in — rejected/ghosted/not_interested
-// share the de-emphasized "closed" column per the dashboard design.
+// Which kanban column a status renders in — rejected/ghosted/not_interested/
+// posting_closed share the de-emphasized "closed" column per the dashboard design.
 export const STATUS_COLUMN: Record<RoleStatus, string> = {
   interested: "interested",
   applied: "applied",
@@ -33,6 +35,7 @@ export const STATUS_COLUMN: Record<RoleStatus, string> = {
   rejected: "closed",
   ghosted: "closed",
   not_interested: "closed",
+  posting_closed: "closed",
 };
 
 export const BOARD_COLUMNS = [
