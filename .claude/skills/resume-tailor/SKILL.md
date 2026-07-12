@@ -32,12 +32,19 @@ Produces a versioned, JD-tailored copy of Ahmed's base LaTeX resume. Uses Supaba
    - Reorder categories and items so the JD's most-wanted skills come first; drop items irrelevant to the role.
    - You may add or swap in skills, but only ones present in `recruiting_profile_skills` or already in base (including base's commented-out lines, e.g. the Quantitative Finance line — uncomment it for quant/finance roles). Never invent a skill.
    - Category labels and line formatting stay as in base; only the lists change.
-5. **Versioning (never overwrite):**
+5. **Independent review — before writing the file.** Invoke the `application-reviewer` subagent
+   (Agent tool) with: the JD, every drafted bullet/project-block change (old vs. new), the
+   Profile Bank rows each one draws from, artifact type `resume`, and the path to
+   `resumes/base.tex`. If it returns `revise` with blocking issues (fabrication or structural
+   drift), fix them — non-negotiable, never argue past a blocking issue. For non-blocking
+   suggestions (JD alignment, redundancy, length), apply what's clearly right; you may keep
+   something the reviewer flagged if you disagree, but say so in the summary Ahmed sees.
+6. **Versioning (never overwrite):**
    - Next version = current `resume_version` + 1 for that application.
    - Write to `resumes/tailored/<company>-<role-slug>-v<N>.tex`.
    <!-- - Compile with `pdflatex` (or `latexmk -pdf`) into the same directory; verify it compiles and check the page count. If it exceeds one page, trim bullet length (shorter variants), not formatting. -->
-6. Update the `recruiting_applications` row: `tailored_resume_path` (the .tex path), `resume_version = N`.
-7. Show Ahmed a summary of what changed vs. base (projects in/out, bullets reworded and why, skills-section changes).
+7. Update the `recruiting_applications` row: `tailored_resume_path` (the .tex path), `resume_version = N`.
+8. Show Ahmed a summary of what changed vs. base (projects in/out, bullets reworded and why, skills-section changes), plus a short reviewer-notes line: what the application-reviewer flagged and whether you fixed it or kept it as-is and why.
 
 ## Guardrails
 
@@ -45,5 +52,7 @@ Produces a versioned, JD-tailored copy of Ahmed's base LaTeX resume. Uses Supaba
 - ~18 bullets total; trim by removing whole project blocks, never by leaving 2–3 bullet stubs.
 - Bullets follow the base template's style: short, direct, ~one rendered line each.
 - No fabricated content — bank material reworded/reordered only (applies to the skills section too).
+- Every draft goes through the `application-reviewer` subagent before it's written to a file —
+  never skip step 5 to save time.
 - Full version history kept; never delete or overwrite an earlier version.
 - Cover letters are handled by the separate `cover-letter` skill, not this one.

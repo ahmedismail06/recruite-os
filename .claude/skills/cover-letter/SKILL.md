@@ -34,18 +34,27 @@ Produces a versioned, JD-tailored cover letter from Ahmed's base LaTeX letter sh
    - If the Profile Bank doesn't have material for one of the four paragraph slots (e.g. no dedicated "communication" story), don't invent one — repurpose the closest real narrative that honestly fits the slot's *function*, and say so when you show the draft.
    - Mirror the JD's language/keywords where it's honestly applicable — don't force it.
    - Escape LaTeX special characters (%, &, #, _, $) in inserted text.
-5. **Versioning (never overwrite):**
+5. **Independent review — before writing the file.** Invoke the `application-reviewer` subagent
+   (Agent tool) with: the JD, the full drafted letter text, the Profile Bank rows each paragraph
+   draws from, artifact type `cover-letter`, and the path to `cover-letters/base.tex`. If it
+   returns `revise` with blocking issues (fabrication or a collapsed/reordered paragraph
+   structure), fix them — non-negotiable, never argue past a blocking issue. For non-blocking
+   suggestions (JD alignment, redundancy, length, tone), apply what's clearly right; you may keep
+   something the reviewer flagged if you disagree, but say so when you show the draft.
+6. **Versioning (never overwrite):**
    - Next version = current `cover_letter_version` + 1 for that application.
    - Write to `cover-letters/tailored/<company>-<role-slug>-v<N>.tex`.
    <!-- - Compile with `tectonic` (or `pdflatex`/`latexmk -pdf`) into the same directory; verify it compiles and is one page. -->
-6. Update the `recruiting_applications` row: `tailored_cover_letter_path` (the .tex path), `cover_letter_version = N`.
-7. Show Ahmed the full letter text and the PDF path before considering the task done — he should read it, since cover letters are more exposed to tone/phrasing judgment than resume bullets.
+7. Update the `recruiting_applications` row: `tailored_cover_letter_path` (the .tex path), `cover_letter_version = N`.
+8. Show Ahmed the full letter text and the PDF path before considering the task done — he should read it, since cover letters are more exposed to tone/phrasing judgment than resume bullets. Include a short reviewer-notes line: what the application-reviewer flagged and whether you fixed it or kept it as-is and why.
 
 ## Guardrails
 
 - Header, margins, fonts, document class: never touched.
 - Four fixed-role body paragraphs (opening/background/collaboration/leadership) + closing — don't restructure into a generic hook-and-recap letter.
 - No fabricated content — Profile Bank material (or facts Ahmed just stated) reworded only, same standard as resume-tailor. Never invent a recipient address.
+- Every draft goes through the `application-reviewer` subagent before it's written to a file —
+  never skip step 5 to save time.
 - ~250–350 words across five paragraphs, one page.
 - Full version history kept; never delete or overwrite an earlier version.
 - This skill only produces a file. Sending (email, portal upload, etc.) is Ahmed's action, never automatic — consistent with the no-auto-send rule for email in this repo.

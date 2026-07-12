@@ -21,6 +21,7 @@ A description of what Ahmed is looking for — a space ("tech for asset managers
 4. **Filter against the bank.** Drop roles whose hard requirements clearly don't match anything in the Profile Bank (e.g. requires 8+ years, or a credential he lacks). Borderline is fine — flag it, don't drop it.
 5. **Present a shortlist** (aim for 5–10): company, role title, link, one line on what the company does, and a 2–3 sentence fit note grounded in actual bank rows (same rules as role-recommend: matches, stretches, gaps — no scores, no invented experience).
 6. **Add only what Ahmed confirms.** For each role he approves, insert into `recruiting_roles` with `source = 'ai-suggested'`, `status = 'interested'`, `jd_text` (fetch the posting text if accessible), and the fit note as `fit_rationale`. If the role is a recurring program/company that hasn't posted a live JD yet, set `not_yet_posted = true` and leave `jd_text` null instead of fabricating one — step 2 will recheck it on future runs. Never insert unconfirmed suggestions.
+7. **Flag ATS-hosted companies for tracking.** If a confirmed posting's URL matches `boards.greenhouse.io/<slug>`, `jobs.lever.co/<slug>`, or `jobs.ashbyhq.com/<slug>`, mention that the company could be added to the `ats-scan` watchlist for automatic recheck on future scans, and offer to add it if Ahmed wants.
 
 ## Guardrails
 

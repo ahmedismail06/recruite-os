@@ -35,7 +35,7 @@ To point the server at a different skills directory, set `RECRUITING_SKILLS_DIR`
 
 ## Guardrails
 
-- **Table allowlist.** The DB tools reach only the seven `recruiting_` tables
+- **Table allowlist.** The DB tools reach only the nine `recruiting_` tables
   (enforced by input schema); recipe-app objects in the shared project are
   unreachable.
 - **No delete tool.** CRM rows are never deleted — roles are marked

@@ -14,15 +14,25 @@ Personal recruiting system for Ahmed (single user). Full spec lives in `SPEC.md`
 Supabase project `dlyombtgtgsavtiqohve` (**mamas-recipes**) — shared with the recipes app.
 
 - Only touch tables/functions prefixed `recruiting_`. Never modify, rename, or drop recipe-app objects (`recipes`, `shortcut_tokens`, `listings`, `get_user_*` functions, etc.).
-- Tables: `recruiting_profile_projects`, `recruiting_profile_experience`, `recruiting_profile_skills`, `recruiting_roles`, `recruiting_applications`, `recruiting_contacts`, `recruiting_interactions`. Schema: `supabase/migrations/`.
+- Tables: `recruiting_profile_projects`, `recruiting_profile_experience`, `recruiting_profile_skills`, `recruiting_roles`, `recruiting_applications`, `recruiting_contacts`, `recruiting_interactions`, `recruiting_tracked_companies`, `recruiting_seen_postings`. Schema: `supabase/migrations/`.
 - RLS is pinned to Ahmed's auth user id `a208e139-3cf1-40ed-aab5-417dc479c585` (email ahmednaserismail6@gmail.com) via `public.recruiting_owner()`. `auth.users` is shared with recipe-app users — never widen policies to all `authenticated`.
 - DB access from skills: Supabase MCP `execute_sql`.
 
 ## Skills (`.claude/skills/`)
 
-`/profile-bank`, `/recruiting-crm`, `/role-recommend`, `/role-scout`, `/resume-tailor`, `/recruiting-digest` — each SKILL.md is authoritative for its flow and guardrails.
+`/profile-bank`, `/recruiting-crm`, `/role-recommend`, `/role-scout`, `/ats-scan`, `/resume-tailor`, `/cover-letter`, `/recruiter-finder`, `/recruiting-digest` — each SKILL.md is authoritative for its flow and guardrails.
+
+`ats-scan` (added 2026-07-11) is a structured complement to `role-scout`'s thesis-based web search: it polls the public Greenhouse/Lever/Ashby job-board APIs for a maintained company watchlist (`recruiting_tracked_companies`) via `scripts/ats-scan.mjs` (fetch-only, no DB access) and dedupes against everything already seen (`recruiting_seen_postings`) before proposing new roles.
 
 `mcp/skills-server/` exposes these same skills over MCP (registered at user scope via `claude mcp add`) as `/mcp__recruiting-skills__*` prompts and `list_skills`/`get_skill` tools, plus `db_select`/`db_insert`/`db_update` tools scoped to the `recruiting_` tables (no delete tool — CRM rows are never deleted). See its README. The server performs no AI or email work itself.
+
+## Application review (`.claude/agents/application-reviewer.md`)
+
+A read-only subagent that `resume-tailor` and `cover-letter` invoke (via the Agent tool) after
+drafting and before writing a file — an independent critique pass for fabrication, structural
+drift, JD alignment, redundancy, and length. Blocking issues (fabrication, structural drift) must
+be fixed; other suggestions are the drafting skill's judgment call. Still one interactive session
+Ahmed triggers, not a background process.
 
 ## Resume
 

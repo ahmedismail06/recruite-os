@@ -175,6 +175,8 @@ const RECRUITING_TABLES = [
   "recruiting_applications",
   "recruiting_contacts",
   "recruiting_interactions",
+  "recruiting_tracked_companies",
+  "recruiting_seen_postings",
 ];
 
 async function loadDbEnv() {
