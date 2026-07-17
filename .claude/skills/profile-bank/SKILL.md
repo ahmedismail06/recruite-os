@@ -33,6 +33,8 @@ Decide from Ahmed's request:
 
 Same flow minus repo analysis: collect `role`, `org`, `date_range`, his problem/approach/impact, draft the three bullet variants, get approval, upsert into `recruiting_profile_experience` (match on role+org).
 
+`recruiting_profile_experience.notes` (markdown) holds the long-form material that doesn't belong in a bullet: the elevator pitch, domain framing, technical war stories, architecture decisions, scope boundaries, interview-question mapping. `resume-tailor` and `cover-letter` read it as source material. When Ahmed hands over a reference doc for an experience, distil it here rather than cramming it into `approach`. Same rules as everywhere else — facts from him or from code, no invented metrics, show it before writing.
+
 ## Resume ingestion
 
 1. Ask for the resume file (PDF or .tex) if not provided; read it.

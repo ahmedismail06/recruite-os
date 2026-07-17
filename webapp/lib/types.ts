@@ -85,6 +85,7 @@ export type ProfileExperience = {
   bullet_short: string | null;
   bullet_medium: string | null;
   bullet_detailed: string | null;
+  notes: string | null;
 };
 
 export type ProfileSkill = {

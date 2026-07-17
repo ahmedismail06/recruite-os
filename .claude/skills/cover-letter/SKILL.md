@@ -18,7 +18,7 @@ Produces a versioned, JD-tailored cover letter from Ahmed's base LaTeX letter sh
 ## Procedure
 
 1. Read `cover-letters/base.tex`. The header block (name, contact icons/links), margins, and document class are fixed — never touched. Only the regions marked `% === EDITABLE: ... ===` (date, recipient, salutation, body) change per letter.
-2. Load the Profile Bank (`recruiting_profile_projects`, `recruiting_profile_experience`) and the JD/company/role from `recruiting_roles`. If Ahmed gives you a more complete/authoritative project description in conversation than what's in a Profile Bank row (e.g. a fuller project charter), use the authoritative version for the letter — and offer to update the Profile Bank row too (profile-bank skill's confirm-before-write rule still applies; don't write it without a yes).
+2. Load the Profile Bank (`recruiting_profile_projects`, `recruiting_profile_experience` — including its `notes` field, which holds the long-form domain framing and project narratives the four body paragraphs are usually built from) and the JD/company/role from `recruiting_roles`. If Ahmed gives you a more complete/authoritative project description in conversation than what's in a Profile Bank row (e.g. a fuller project charter), use the authoritative version for the letter — and offer to update the Profile Bank row too (profile-bank skill's confirm-before-write rule still applies; don't write it without a yes).
 3. Draft the letter as **four body paragraphs, each with a fixed rhetorical job** — this is not free-form; don't collapse or reorder them:
    1. **Opening** — name the role and company, tie in one concrete real experience that's directly relevant to the role's core mandate, state genuine interest, and ask for an opportunity to interview. No generic enthusiasm ("your innovative culture") — the tie-in must be specific.
    2. **Background** ("As my resume indicates...") — academic program/status + current role, then **one quantified analytical/problem-solving achievement** pulled from a Profile Bank `impact` field.
@@ -30,7 +30,7 @@ Produces a versioned, JD-tailored cover letter from Ahmed's base LaTeX letter sh
    - **Sign-off:** "Sincerely," — single closing line, not a doubled "Sincerely, Best regards,".
    - Target ~250–350 words across the five paragraphs — one page total including the header.
 4. **Rewording rules (same as resume-tailor):**
-   - Every claim must trace to a Profile Bank row (`problem`/`approach`/`impact`/`summary`/bullet fields) or something Ahmed just told you directly. Never fabricate a metric, technology, employer, address, or claim not present in either.
+   - Every claim must trace to a Profile Bank row (`problem`/`approach`/`impact`/`summary`/`notes`/bullet fields) or something Ahmed just told you directly. Never fabricate a metric, technology, employer, address, or claim not present in either.
    - If the Profile Bank doesn't have material for one of the four paragraph slots (e.g. no dedicated "communication" story), don't invent one — repurpose the closest real narrative that honestly fits the slot's *function*, and say so when you show the draft.
    - Mirror the JD's language/keywords where it's honestly applicable — don't force it.
    - Escape LaTeX special characters (%, &, #, _, $) in inserted text.

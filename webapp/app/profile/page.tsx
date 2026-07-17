@@ -163,6 +163,16 @@ export default async function ProfilePage() {
               <TagRow label="stack" items={e.tech_stack} />
               <TagRow label="tags" items={e.tags} />
               <Bullets item={e} />
+              {e.notes && (
+                <details className="mt-3 border-t border-border pt-3">
+                  <summary className="cursor-pointer text-xs tracking-wide text-text-tertiary uppercase">
+                    Notes
+                  </summary>
+                  <div className="mt-2 font-mono text-[12px] whitespace-pre-wrap text-text-mid">
+                    {e.notes}
+                  </div>
+                </details>
+              )}
             </details>
           ))}
           {experienceList.length === 0 && (

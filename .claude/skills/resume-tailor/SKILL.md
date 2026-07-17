@@ -17,13 +17,14 @@ Produces a versioned, JD-tailored copy of Ahmed's base LaTeX resume. Uses Supaba
 ## Procedure
 
 1. Read `resumes/base.tex` and identify the editable regions: bullet items (`\item` lines inside experience/project entries), whole project blocks, and the *content* of the Technical Skills lines. Everything else — preamble, document class, margins, section order, headers, spacing commands — is off-limits.
-2. Load the Profile Bank (projects, experience, skills) and the JD. Decide:
+2. Load the Profile Bank (projects, experience, skills) and the JD. Read `recruiting_profile_experience.notes` too — it holds long-form context (domain framing, technical war stories, architecture detail) that often carries the specific fact a JD is asking for when the bullet variants don't. It is source material, not resume copy: mine it for facts and reword them into the base template's bullet style, never paste it in.
+   Decide:
    - which projects to include/drop (most JD-relevant ones in),
    - which bullet variant (short/medium/detailed) fits each slot,
    - how to reword bullets to mirror the JD's language and keyword choices.
    **Bullet budget: ~18 `\item` bullets total across the Experience section.** Hit the budget by dropping the least JD-relevant *project* blocks entirely — never by thinning entries down to 2–3 bullets each. Real employment entries (internships/jobs) always stay; a project block is only worth including if it earns its full bullet set (4–5 bullets), otherwise cut the whole block.
 3. **Rewording rules:**
-   - Every bullet must trace to a Profile Bank row. Never fabricate a metric, technology, or claim not present in the bank.
+   - Every bullet must trace to a Profile Bank row — any of `problem`/`approach`/`impact`/`notes`/the bullet variants. Never fabricate a metric, technology, or claim not present in the bank.
    - **Bullet style: match the base template's bullets.** They are the template for a reason — short, direct, one strong verb, one fact-dense clause, ~one rendered line (≈125 characters at 11pt). Don't stack subordinate clauses or pile qualifiers; if a rewrite runs to two rendered lines, cut detail until it fits. A bullet may wrap only if the corresponding base bullet already wraps.
    - Rewrites stay within the existing bullet slots — same number of `\item`s per entry unless a whole project block is added/removed.
    - Keep to one page unless the base resume is already longer.
