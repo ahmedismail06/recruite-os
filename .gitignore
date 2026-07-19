@@ -16,3 +16,11 @@ resumes/**/*.log
 /knowledge-base/
 /resumes/
 /cover-letters/
+
+# Per-user setup output — never tracked in git
+/recruiting-os.config.json
+/supabase/schema.sql
+# Local-mode data store (your personal recruiting data). The template README is
+# committed via a negated rule so the folder layout is discoverable on clone.
+/data/*
+!/data/README.md

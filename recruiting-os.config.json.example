@@ -1,0 +1,12 @@
+{
+  "storage": "local",
+  "owner_name": "You",
+  "supabase": {
+    "project_ref": "YOUR-PROJECT-REF"
+  },
+  "options": {
+    "gmail": false,
+    "browser": false,
+    "webapp": false
+  }
+}

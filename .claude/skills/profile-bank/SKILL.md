@@ -1,39 +1,39 @@
 ---
 name: profile-bank
-description: Build or update Ahmed's Profile Bank — extract factual project/experience details from his real repos and resume, collect his problem/approach/impact narrative, and write bullet variants to the recruiting_profile_* Supabase tables. Use when Ahmed says "update my profile bank", "add <project> to my profile", or "ingest my resume".
+description: Build or update the user's Profile Bank — extract factual project/experience details from the user's real repos and resume, collect the user's problem/approach/impact narrative, and write bullet variants to the recruiting_profile_* Supabase tables. Use when the user says "update my profile bank", "add <project> to my profile", or "ingest my resume".
 ---
 
 # profile-bank
 
-Populates and maintains the Profile Bank: `recruiting_profile_projects`, `recruiting_profile_experience`, `recruiting_profile_skills` in Supabase project `dlyombtgtgsavtiqohve` (shared with the recipes app — never touch non-`recruiting_` tables).
+Populates and maintains the Profile Bank: the projects, experience, and skills records.
 
-All DB access goes through the Supabase MCP tools (`execute_sql`). Never suggest cron, headless runs, or `ANTHROPIC_API_KEY` — this skill only runs inside an interactive session when Ahmed invokes it.
+**Storage is backend-agnostic** — resolve it from `recruiting-os.config.json` per `STORAGE.md`: Supabase mode → MCP `execute_sql` on `recruiting_profile_projects` / `recruiting_profile_experience` / `recruiting_profile_skills` (never touch non-`recruiting_` tables); local mode → the markdown files under `data/profile/`. If no config exists, tell the user to run `/setup` first. Never suggest cron, headless runs, or `ANTHROPIC_API_KEY` — this skill only runs inside an interactive session when the user invokes it.
 
 ## Modes
 
-Decide from Ahmed's request:
+Decide from the user's request:
 
-1. **Add/update a project** — Ahmed names a project and (usually) a repo path or URL.
+1. **Add/update a project** — the user names a project and (usually) a repo path or URL.
 2. **Add/update an experience** — a job/role (e.g. Willett, IvyRead, swim coaching); usually no repo.
-3. **Ingest resume** (first run, or when he uploads a new resume) — extract skills, coursework, certs.
+3. **Ingest resume** (first run, or when the user uploads a new resume) — extract skills, coursework, certs.
 
 ## Adding a project
 
 1. **Read the actual code.** If a local repo path is given, explore it (structure, main modules, dependencies/manifests, README). Extract only *facts*: tech stack, architecture, what was actually built. Never infer impact numbers from code.
-2. **Ask Ahmed for the narrative.** `problem`, `approach`, `impact` are written by him. If he hasn't supplied them in the invocation, ask for all three in one message before writing anything. Do not draft them for him unless he explicitly asks; even then, base every claim on what he said or what the code shows.
-3. **Draft bullet variants** from his narrative + extracted facts:
+2. **Ask the user for the narrative.** `problem`, `approach`, `impact` are written by the user. If the user hasn't supplied them in the invocation, ask for all three in one message before writing anything. Do not draft them for the user unless the user explicitly asks; even then, base every claim on what the user said or what the code shows.
+3. **Draft bullet variants** from the user's narrative + extracted facts:
    - `bullet_short` — one resume line (~1 line at 10.5–11pt), strong verb, tech + outcome.
    - `bullet_medium` — 1–2 lines with more specifics.
    - `bullet_detailed` — 2–4 sentences, interview-prep depth.
-   Show all three to Ahmed for approval before writing to the DB. Never include a metric he didn't state.
+   Show all three to the user for approval before writing to the DB. Never include a metric the user didn't state.
 4. **Upsert** into `recruiting_profile_projects` (match on `title`; update if it exists, insert otherwise). Fill `tech_stack` from the repo analysis, `tags` (e.g. finance, ML, backend, full-stack, leadership), `repo_url`, `date_range`, `summary`.
 5. Also upsert any newly-seen technologies into `recruiting_profile_skills` with `source = 'extracted from <repo>'` (category: language/framework/tool). Skip duplicates (match on lower(name)).
 
 ## Adding an experience
 
-Same flow minus repo analysis: collect `role`, `org`, `date_range`, his problem/approach/impact, draft the three bullet variants, get approval, upsert into `recruiting_profile_experience` (match on role+org).
+Same flow minus repo analysis: collect `role`, `org`, `date_range`, the user's problem/approach/impact, draft the three bullet variants, get approval, upsert into `recruiting_profile_experience` (match on role+org).
 
-`recruiting_profile_experience.notes` (markdown) holds the long-form material that doesn't belong in a bullet: the elevator pitch, domain framing, technical war stories, architecture decisions, scope boundaries, interview-question mapping. `resume-tailor` and `cover-letter` read it as source material. When Ahmed hands over a reference doc for an experience, distil it here rather than cramming it into `approach`. Same rules as everywhere else — facts from him or from code, no invented metrics, show it before writing.
+`recruiting_profile_experience.notes` (markdown) holds the long-form material that doesn't belong in a bullet: the elevator pitch, domain framing, technical war stories, architecture decisions, scope boundaries, interview-question mapping. `resume-tailor` and `cover-letter` read it as source material. When the user hands over a reference doc for an experience, distil it here rather than cramming it into `approach`. Same rules as everywhere else — facts from the user or from code, no invented metrics, show it before writing.
 
 ## Resume ingestion
 
@@ -47,6 +47,6 @@ Same flow minus repo analysis: collect `role`, `org`, `date_range`, his problem/
 
 ## Guardrails
 
-- Facts come from code and Ahmed; narrative comes from Ahmed only. Never fabricate metrics, scope, or claims.
+- Facts come from code and the user; narrative comes from the user only. Never fabricate metrics, scope, or claims.
 - Only write to `recruiting_`-prefixed tables.
 - Always show what you're about to write and get a yes before the DB write.

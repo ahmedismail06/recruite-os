@@ -59,10 +59,10 @@ async function loadAllSkills() {
 
 function skillPromptText(skill, args) {
   const argsBlock = args?.trim()
-    ? `\n\nAhmed's request for this invocation:\n${args.trim()}`
+    ? `\n\nUser's request for this invocation:\n${args.trim()}`
     : "";
   return (
-    `You are running the "${skill.name}" skill from Ahmed's recruiting-os. ` +
+    `You are running the "${skill.name}" skill from the user's recruiting-os. ` +
     `Follow its instructions exactly, including all guardrails (interactive only, ` +
     `Gmail drafts only, never fabricate profile content, never delete CRM rows, ` +
     `only touch recruiting_-prefixed Supabase objects).\n\n` +
@@ -90,7 +90,7 @@ for (const { name, description } of startupSkills) {
         args: z
           .string()
           .optional()
-          .describe("Ahmed's request — what to do with this skill"),
+          .describe("the user's request — what to do with this skill"),
       },
     },
     async ({ args }) => {
@@ -111,7 +111,7 @@ server.registerTool(
   "list_skills",
   {
     description:
-      "List Ahmed's recruiting-os skills (name + description + when to use each). " +
+      "List the user's recruiting-os skills (name + description + when to use each). " +
       "Call this to decide which skill fits a recruiting task, then load it with get_skill.",
     inputSchema: {},
   },
@@ -137,7 +137,7 @@ server.registerTool(
       args: z
         .string()
         .optional()
-        .describe("Ahmed's request — what to do with this skill"),
+        .describe("the user's request — what to do with this skill"),
     },
   },
   async ({ name, args }) => {

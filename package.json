@@ -1,0 +1,12 @@
+{
+  "name": "recruiting-os",
+  "private": true,
+  "description": "Personal recruiting system — Profile Bank + CRM + resume/cover-letter tailoring + email watchdog, driven by Claude Code skills.",
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "web": "npm --prefix webapp run dev"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

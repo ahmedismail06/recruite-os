@@ -1,13 +1,13 @@
 ---
 name: resume-tailor
-description: Tailor Ahmed's LaTeX resume to a specific job description using Profile Bank bullet variants — edits bullet content and project inclusion only, never structure or formatting. Use when Ahmed asks to tailor/customize his resume for a role or application.
+description: Tailor the user's LaTeX resume to a specific job description using Profile Bank bullet variants — edits bullet content and project inclusion only, never structure or formatting. Use when the user asks to tailor/customize the user's resume for a role or application.
 ---
 
 # resume-tailor
 
-Produces a versioned, JD-tailored copy of Ahmed's base LaTeX resume. Uses Supabase MCP (`execute_sql`) against project `dlyombtgtgsavtiqohve` for Profile Bank reads and application updates.
+Produces a versioned, JD-tailored copy of the user's base LaTeX resume. Reads the Profile Bank and updates application records through the backend named in `recruiting-os.config.json` per `STORAGE.md` (Supabase MCP `execute_sql` on the `recruiting_` tables, or the markdown under `data/`). If no config exists, tell the user to run `/setup` first.
 
-**Base template:** `resumes/base.tex` in this repo. If it doesn't exist yet, stop and ask Ahmed to provide his `.tex` file — do not invent a template.
+**Base template:** `resumes/base.tex` in this repo. If it doesn't exist yet, stop and ask the user to provide the user's `.tex` file — do not invent a template.
 
 ## Input
 
@@ -39,13 +39,13 @@ Produces a versioned, JD-tailored copy of Ahmed's base LaTeX resume. Uses Supaba
    `resumes/base.tex`. If it returns `revise` with blocking issues (fabrication or structural
    drift), fix them — non-negotiable, never argue past a blocking issue. For non-blocking
    suggestions (JD alignment, redundancy, length), apply what's clearly right; you may keep
-   something the reviewer flagged if you disagree, but say so in the summary Ahmed sees.
+   something the reviewer flagged if you disagree, but say so in the summary the user sees.
 6. **Versioning (never overwrite):**
    - Next version = current `resume_version` + 1 for that application.
    - Write to `resumes/tailored/<company>-<role-slug>-v<N>.tex`.
    <!-- - Compile with `pdflatex` (or `latexmk -pdf`) into the same directory; verify it compiles and check the page count. If it exceeds one page, trim bullet length (shorter variants), not formatting. -->
 7. Update the `recruiting_applications` row: `tailored_resume_path` (the .tex path), `resume_version = N`.
-8. Show Ahmed a summary of what changed vs. base (projects in/out, bullets reworded and why, skills-section changes), plus a short reviewer-notes line: what the application-reviewer flagged and whether you fixed it or kept it as-is and why.
+8. Show the user a summary of what changed vs. base (projects in/out, bullets reworded and why, skills-section changes), plus a short reviewer-notes line: what the application-reviewer flagged and whether you fixed it or kept it as-is and why.
 
 ## Guardrails
 

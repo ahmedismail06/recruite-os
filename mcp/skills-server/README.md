@@ -6,14 +6,16 @@ session. It exposes:
 - **Prompts** — one per skill in `.claude/skills/`, so each shows up as a slash
   command: `/mcp__recruiting-skills__recruiting-crm`,
   `/mcp__recruiting-skills__resume-tailor`, etc. Each takes an optional `args`
-  string (Ahmed's request for that invocation).
+  string (your request for that invocation).
 - **Skill tools** — `list_skills` (name + description of every skill) and
   `get_skill` (full instructions for one skill), so Claude can discover and
   load a skill on its own.
 - **DB tools** — `db_select`, `db_insert`, `db_update` against the recruiting
-  tables in the shared Supabase project, using the same `SUPABASE_URL` /
-  `SUPABASE_SECRET_KEY` credentials as the webapp (read from
-  `webapp/.env.local`, overridable via the server's environment).
+  tables, using the same `SUPABASE_URL` / `SUPABASE_SECRET_KEY` credentials as
+  the webapp (read from `webapp/.env.local`, overridable via the server's
+  environment). These apply only to the **Supabase** storage backend; in local
+  (`.md` files) mode the skills read and write files under `data/` directly, so
+  the DB tools are simply unused. See `STORAGE.md`.
 
 Skill content is re-read from disk on every invocation, so editing a SKILL.md
 takes effect immediately. Adding or removing a skill *directory* requires a
@@ -21,14 +23,20 @@ server restart (prompts are registered at startup).
 
 ## Setup
 
+The easiest path is `node scripts/setup.mjs` from the repo root (or `npm run setup`) — it installs
+this server's deps and prints the exact `claude mcp add` command with your clone's absolute path
+already filled in. To do it by hand:
+
 ```sh
 cd mcp/skills-server && npm install
 ```
 
-Registered at **user scope** so it's available in every Claude Code session:
+Register at **user scope** so it's available in every Claude Code session. Use the absolute path to
+`server.mjs` in *your* clone (`node -e "console.log(process.cwd())"` from the repo root, or run
+`scripts/setup.mjs` which prints it):
 
 ```sh
-claude mcp add --scope user recruiting-skills -- node /Users/ahmedismail/Desktop/recruiting-os/mcp/skills-server/server.mjs
+claude mcp add --scope user recruiting-skills -- node <ABSOLUTE-PATH-TO-CLONE>/mcp/skills-server/server.mjs
 ```
 
 To point the server at a different skills directory, set `RECRUITING_SKILLS_DIR`.

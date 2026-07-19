@@ -1,4 +1,4 @@
--- Adds a 'not_interested' status for roles Ahmed decides to pass on himself,
+-- Adds a 'not_interested' status for roles the owner decides to pass on themselves,
 -- distinct from 'rejected' (company said no) and 'ghosted' (no response).
 alter table public.recruiting_roles
   drop constraint recruiting_roles_status_check;

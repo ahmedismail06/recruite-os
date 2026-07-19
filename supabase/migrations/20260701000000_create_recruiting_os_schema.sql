@@ -1,8 +1,12 @@
 -- Recruiting OS schema. All objects are prefixed `recruiting_` so they can
--- never collide with recipe-app tables sharing this project.
--- Access is pinned to Ahmed's auth user; other users in the shared
--- auth.users (recipe-app users) get no access.
--- Applied to project dlyombtgtgsavtiqohve on 2026-07-01 via Supabase MCP.
+-- never collide with other tables if this project is shared with another app.
+--
+-- recruiting_owner() returns the owner's auth user id, used by the owner-scoped
+-- RLS policies below. In practice the app connects with the secret key (which
+-- bypasses RLS) and the `recruiting anon local access` policies (migration
+-- 20260703000000) grant the no-login webapp access, so this owner id is a
+-- legacy no-op — left as all-zeros. If you ever add real authenticated access,
+-- replace it with your own auth.uid().
 
 create or replace function public.recruiting_owner()
 returns uuid
@@ -10,7 +14,7 @@ language sql
 stable
 set search_path = ''
 as $$
-  select 'a208e139-3cf1-40ed-aab5-417dc479c585'::uuid
+  select '00000000-0000-0000-0000-000000000000'::uuid
 $$;
 
 create or replace function public.recruiting_set_updated_at()
@@ -136,7 +140,7 @@ create trigger recruiting_set_updated_at before update on public.recruiting_appl
 create trigger recruiting_set_updated_at before update on public.recruiting_contacts
   for each row execute function public.recruiting_set_updated_at();
 
--- ── RLS: owner-only, pinned to Ahmed's user id ──────────────────
+-- ── RLS: owner-scoped policies (see recruiting_owner() note above) ──
 
 alter table public.recruiting_profile_projects enable row level security;
 alter table public.recruiting_profile_experience enable row level security;

@@ -75,7 +75,7 @@ export async function updatePostingUrl(formData: FormData) {
   revalidatePath(`/roles/${roleId}`);
 }
 
-// Manual override for when Ahmed spots a watchlisted posting go live before
+// Manual override for when the user spots a watchlisted posting go live before
 // the next role-scout run catches it — role-scout is the one that normally
 // flips this once it finds a real posting URL/JD.
 export async function markRolePosted(formData: FormData) {

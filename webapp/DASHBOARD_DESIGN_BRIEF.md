@@ -1,6 +1,6 @@
 # Recruiting OS — Dashboard Design Brief
 
-For redesigning the home page (`app/page.tsx`) of the Recruiting OS webapp. Single user (Ahmed), desktop-first but must not break on mobile. Next.js App Router + Tailwind; data is server-fetched from Supabase (tables: `recruiting_roles`, `recruiting_applications`, `recruiting_contacts`, `recruiting_interactions`, plus profile bank). No auth, no multi-user states needed.
+For redesigning the home page (`app/page.tsx`) of the Recruiting OS webapp. Single user (the user), desktop-first but must not break on mobile. Next.js App Router + Tailwind; data is server-fetched from Supabase (tables: `recruiting_roles`, `recruiting_applications`, `recruiting_contacts`, `recruiting_interactions`, plus profile bank). No auth, no multi-user states needed.
 
 ## The core problem with the current dashboard
 
@@ -49,7 +49,7 @@ Last 5 interactions (from `recruiting_interactions`): "emailed Jane @ Stripe —
 
 Current look is template-default. Direction: **quiet terminal-professional** — this is a personal ops tool, closer to Linear/a trading blotter than a marketing site.
 
-- **Foundation:** near-white warm background (not pure `slate-50`), one accent color used *only* for interactive elements and the action queue's urgency markers. Everything else stays neutral. Dark mode is worth doing (`next-themes` pattern is familiar from his other apps).
+- **Foundation:** near-white warm background (not pure `slate-50`), one accent color used *only* for interactive elements and the action queue's urgency markers. Everything else stays neutral. Dark mode is worth doing (`next-themes` pattern is familiar from the user's other apps).
 - **Typography:** Geist Sans for UI, Geist Mono for all numbers/dates/counts (already loaded — use them deliberately). Tighten the type scale: one page title, small uppercase section labels, everything else 13–14px.
 - **Status colors:** a single consistent hue ramp across the app — interested (neutral) → applied (blue) → screening/interviewing (violet/purple) → offer (green) → rejected/ghosted (desaturated gray, never red — red is reserved for *overdue*, which is actionable).
 - **Density:** compact rows and cards, generous *section* spacing. The board should fit 6 columns without horizontal scroll at 1440px.
