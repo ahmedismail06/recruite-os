@@ -33,6 +33,9 @@ For known contacts with new inbound mail, update `last_touch_date` / `last_touch
 For every **follow-up-due** item, create a Gmail **draft** (`create_draft`) — reply on the existing thread where possible:
 - Application follow-up: brief, reiterates interest, references the date applied and role title.
 - Networking follow-up: references the last interaction's summary from the CRM.
+
+If Ahmed asks for a follow-up to go from his school Outlook address instead, open it with `node scripts/outlook-draft.mjs --to … --cc … --subject … --body-file …` (see CLAUDE.md → Email drafts). That opens a new compose window only — it cannot reply on an existing thread, is plain text, and cannot attach files — so Gmail stays the default for anything already threaded in Gmail.
+
 Plain, specific, no invented details. **Never send email under any circumstances** — Ahmed reviews and sends drafts himself.
 
 ### 6. Summary
@@ -40,6 +43,6 @@ End with a chat summary: overdue applications (days silent), overdue contacts, t
 
 ## Guardrails
 
-- Drafts only — no send, ever.
+- Drafts only (Gmail draft or Outlook compose window) — no send, ever.
 - New contacts/roles from email require explicit confirmation before DB writes.
 - Only `recruiting_`-prefixed tables; never delete rows.
