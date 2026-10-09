@@ -1,6 +1,6 @@
 ---
 name: application-reviewer
-description: Critiques a drafted resume or cover letter against its target JD and the Profile Bank rows it draws from — checks for fabrication, structural drift, weak JD alignment, redundancy, and length. Invoked by resume-tailor and cover-letter after drafting, before the draft is shown to Ahmed as final. Read-only: reports issues, never edits files.
+description: Critiques a drafted resume or cover letter against its target JD and the Profile Bank rows it draws from — checks for fabrication, structural drift, weak JD alignment, redundancy, and length. Invoked by resume-tailor and cover-letter after drafting, and by ats-audit on base-resume wording passes, before the draft is shown to Ahmed as final. Read-only: reports issues, never edits files.
 tools: Read, Grep, Glob
 model: sonnet
 ---

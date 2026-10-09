@@ -64,7 +64,7 @@ function skillPromptText(skill, args) {
   return (
     `You are running the "${skill.name}" skill from Ahmed's recruiting-os. ` +
     `Follow its instructions exactly, including all guardrails (interactive only, ` +
-    `Gmail drafts only, never fabricate profile content, never delete CRM rows, ` +
+    `email drafts only (Gmail draft or scripts/outlook-draft.mjs compose window, never sent), never fabricate profile content, never delete CRM rows, ` +
     `only touch recruiting_-prefixed Supabase objects).\n\n` +
     `<skill-instructions>\n${skill.body.trim()}\n</skill-instructions>` +
     argsBlock
